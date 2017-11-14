@@ -7,6 +7,8 @@ export default {
     parse: fileName =>
       axios
         .get("/api/logs/parse", { params: { fileName: fileName } })
-        .then(res => res.data)
+        .then(res => res.data),
+    getAllLogs: () => axios.get("/api/logs/").then(res => res.data),
+    getLogByID: id => axios.get(`/api/logs/${id}`).then(res => res.data)
   }
 };

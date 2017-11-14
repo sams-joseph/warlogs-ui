@@ -9,7 +9,7 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./rootReducer";
-import "semantic-ui-css/semantic.min.css";
+// import "semantic-ui-css/semantic.min.css";
 
 const store = createStore(
   rootReducer,

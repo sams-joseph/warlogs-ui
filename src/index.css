@@ -1,11 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background: #22262e !important;
 }
 
 .container {
   max-width: 1240px;
   padding: 20px;
   margin: 0 auto;
+  min-height: calc(100vh - 255px);
+}
+
+a {
+  color: #60bfff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #1ea5ff;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-object {
+  width: 50%;
+  padding: 10px;
+}
+
+h5 {
+  color: white;
 }

@@ -4,12 +4,15 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.0",
+    "material-ui": "^0.19.4",
+    "moment": "^2.19.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-dropzone": "^4.2.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
+    "recharts": "^1.0.0-beta.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
@@ -25,5 +28,5 @@
   "devDependencies": {
     "flow-bin": "^0.57.3"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:5000"
 }

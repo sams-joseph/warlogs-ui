@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Header } from "semantic-ui-react";
 import UploadForm from "../components/forms/UploadForm";
 import { uploadLogs } from "../actions/logs";
 
@@ -11,8 +12,10 @@ class UploadPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Upload Page</h1>
+      <div className="container">
+        <Header as="h2" inverted>
+          Upload Page
+        </Header>
         <UploadForm submit={this.submit} />
       </div>
     );
