@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Paper from "material-ui/Paper";
-import CircularProgress from "material-ui/CircularProgress";
 import {
   AreaChart as AreaChartRecharts,
   XAxis,
@@ -41,7 +40,7 @@ class AreaChart extends Component {
     };
   }
   render() {
-    const { player, damage, healing } = this.props;
+    const { damage, healing } = this.props;
     const chartData = [];
     const tooltipData = [];
     const damageData = createPerSecondChartData(damage);
@@ -139,22 +138,5 @@ function createPerSecondChartData(object) {
   return chartData;
 }
 
-function getClosest(num, arr) {
-  let mid;
-  let lo = 0;
-  let hi = arr.length - 1;
-  while (hi - lo > 1) {
-    mid = Math.floor((lo + hi) / 2);
-    if (arr[mid] < num) {
-      lo = mid;
-    } else {
-      hi = mid;
-    }
-  }
-  if (num - arr[lo] <= arr[hi] - num) {
-    return arr[lo];
-  }
-  return arr[hi];
-}
 
 export default AreaChart;

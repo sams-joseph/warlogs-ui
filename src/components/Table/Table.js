@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Table as SemanticTable } from "semantic-ui-react";
 import {
   Table as MaterialTable,
   TableBody as MaterialTableBody,
@@ -8,16 +7,16 @@ import {
   TableRow as MaterialTableRow,
   TableRowColumn as MaterialTableRowColumn
 } from "material-ui/Table";
-import { calculatePerSecond, calculateTotalAmount } from "../../utils/data";
 
 class Table extends Component {
   render() {
     const { data, cells, headers, cellWidth, maxHeight } = this.props;
-    const tableRow = data.map(row => {
+    const tableRow = data.map((row,index) => {
       const rowCells = [];
       for (let i = 0; i < cells; i++) {
         rowCells.push(
           <MaterialTableRowColumn
+            key={i}
             style={{
               width: `${cellWidth[i]}rem`
             }}
@@ -26,12 +25,13 @@ class Table extends Component {
           </MaterialTableRowColumn>
         );
       }
-      return <MaterialTableRow key={row[0]}>{rowCells}</MaterialTableRow>;
+      return <MaterialTableRow key={index}>{rowCells}</MaterialTableRow>;
     });
     const headerCells = [];
     for (let i = 0; i < headers.length; i++) {
       headerCells.push(
         <MaterialTableHeaderColumn
+          key={i}
           style={{
             width: `${cellWidth[i]}rem`
           }}

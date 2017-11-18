@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { Header, Image, Grid } from "semantic-ui-react";
-import {
-  TableRow as MaterialTableRow,
-  TableRowColumn as MaterialTableRowColumn
-} from "material-ui/Table";
 import LinearProgress from "material-ui/LinearProgress";
 import CircularProgress from "material-ui/CircularProgress";
 import Table from "../components/Table";
@@ -47,9 +42,10 @@ class LogOverviewPage extends Component {
         {!success ? (
           <CircularProgress
             style={{
-              top: "40%",
-              left: "calc(50% - 40px)",
-              position: "absolute"
+              top: "50%",
+              left: "50%",
+              position: "absolute",
+              transform: "translateX(-50%) translateY(-50%)"
             }}
           />
         ) : (
@@ -152,7 +148,7 @@ function createRowOutput(object, casters, target) {
     casters.forEach(caster => {
       const totalAmount = calculateTotalAmount(object, caster, target);
       let perSecondAmount = calculatePerSecond(object, caster, target);
-      if (perSecondAmount === Infinity || perSecondAmount === NaN)
+      if (perSecondAmount === Infinity || isNaN(perSecondAmount))
         perSecondAmount = 1;
 
       if (totalAmount > 0) {
@@ -196,7 +192,7 @@ function createRowInput(object) {
   allSpells.forEach(spell => {
     const totalAmount = calculateDamageTotalForAbility(object, spell);
     let perSecondAmount = calculateTakenPerSecond(object, spell);
-    if (perSecondAmount === Infinity || perSecondAmount === NaN)
+    if (perSecondAmount === Infinity || isNaN(perSecondAmount))
       perSecondAmount = 1;
 
     if (totalAmount > 0) {

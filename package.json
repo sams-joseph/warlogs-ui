@@ -27,6 +27,5 @@
   },
   "devDependencies": {
     "flow-bin": "^0.57.3"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

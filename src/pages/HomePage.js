@@ -11,7 +11,6 @@ import {
   TableRowColumn as MaterialTableRowColumn
 } from "material-ui/Table";
 import CircularProgress from "material-ui/CircularProgress";
-import { Header } from "semantic-ui-react";
 import { getAllLogs } from "../actions/logs";
 
 class HomePage extends Component {
