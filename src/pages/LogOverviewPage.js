@@ -6,6 +6,7 @@ import LinearProgress from "material-ui/LinearProgress";
 import CircularProgress from "material-ui/CircularProgress";
 import Table from "../components/Table";
 import AreaChart from "../components/AreaChart";
+import PlayerHeader from '../components/PlayerHeader';
 import {
   calculateTotalAmount,
   calculatePerSecond,
@@ -50,6 +51,7 @@ class LogOverviewPage extends Component {
           />
         ) : (
           <div>
+            <PlayerHeader player={getPlayerName(log.name)} image={getPlayerClass(log.raw, getPlayerName(log.name))} career={getPlayerClass(log.raw, getPlayerName(log.name)).split('-').join(' ')} date={moment(log.date).format("MMMM DD, YYYY h:mm A")}/>
             <AreaChart
               damage={filterByCaster(log.damage, "Gorshield")}
               healing={log.healing}
@@ -236,6 +238,17 @@ function createRowDeaths(objects) {
   });
 
   return rows;
+}
+
+function getPlayerClass(object, player) {
+  let career = 'Unknown Career';
+  object.forEach(obj => {
+    if (obj.caster.name === player && obj.spell.meta) {
+      career =  obj.spell.meta.career;
+    }
+  });
+
+  return career;
 }
 
 export default connect(mapStateToProps, { getLogByID })(LogOverviewPage);

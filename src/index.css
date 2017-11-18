@@ -36,6 +36,13 @@ a:hover {
   padding: 10px;
 }
 
+@media(max-width: 800px) {
+  .flex-object {
+    width: 100%;
+    padding: 10px;
+  } 
+}
+
 h5 {
   color: white;
 }
