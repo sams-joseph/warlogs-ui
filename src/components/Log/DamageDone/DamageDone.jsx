@@ -5,7 +5,6 @@ import moment from 'moment';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
-import AreaChart from '../../AreaChart';
 import DamageDoneChart from '../../Visualizations/DamageDoneChart';
 import {
   calculateTotalAmount,
