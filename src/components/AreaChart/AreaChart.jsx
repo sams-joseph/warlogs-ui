@@ -74,8 +74,6 @@ class AreaChart extends Component {
       <Paper
         style={{
           marginTop: "30px",
-          marginLeft: "10px",
-          marginRight: "10px"
         }}
         zDepth={0}
       >

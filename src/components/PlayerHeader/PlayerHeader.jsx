@@ -6,7 +6,6 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  padding: 0 10px;
 `;
 
 const StyledDiv = styled.div`

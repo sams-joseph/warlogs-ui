@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import LogOverviewPage from "./pages/LogOverviewPage";
+import Overview from './components/Log/Overview';
 
 const App = ({ location }) => (
   <div>
@@ -14,7 +14,7 @@ const App = ({ location }) => (
       path="/log-overview/:id"
       location={location}
       exact
-      component={LogOverviewPage}
+      component={Overview}
     />
     <footer style={{ width: "100%", height: "200px", background: "#16191C" }} />
   </div>

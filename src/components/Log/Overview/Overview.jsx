@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import LinearProgress from "material-ui/LinearProgress";
-import CircularProgress from "material-ui/CircularProgress";
-import Table from "../components/Table";
-import AreaChart from "../components/AreaChart";
-import PlayerHeader from '../components/PlayerHeader';
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import LinearProgress from 'material-ui/LinearProgress';
+import CircularProgress from 'material-ui/CircularProgress';
+import Table from '../../Table';
+import AreaChart from '../../AreaChart';
+import PlayerHeader from '../../PlayerHeader';
+import SubNavbar from '../../SubNavbar';
 import {
   calculateTotalAmount,
   calculatePerSecond,
@@ -14,22 +16,49 @@ import {
   calculateDamageTotalForAbility,
   calculateTakenPerSecond,
   getPlayerName,
-  filterByCaster
-} from "../utils/data";
-import { getLogByID } from "../actions/logs";
+  filterByCaster,
+} from '../../../utils/data';
+import { getLogByID } from '../../../actions/logs';
 
-class LogOverviewPage extends Component {
+const Grid = styled.div`
+  display: block;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const Column = styled.div`
+  width: 50%;
+  padding: 10px;
+  
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  @media(max-width: 700px) {
+    width: 100%;
+    padding: 0;
+  }
+`;
+
+class Overview extends Component {
   constructor() {
     super();
     this.state = {
-      success: false
+      success: false,
     };
   }
 
   componentDidMount() {
-    this.props.getLogByID(this.props.match.params.id).then(data => {
+    this.props.getLogByID(this.props.match.params.id).then(() => {
       this.setState({
-        success: true
+        success: true,
       });
     });
   }
@@ -37,6 +66,24 @@ class LogOverviewPage extends Component {
   render() {
     const { log } = this.props;
     const { success } = this.state;
+
+    const links = [
+      {
+        key: 'overview', route: `/log-overview/${log._id}`, name: 'Overview', disabled: false,
+      },
+      {
+        key: 'damage-done', route: `/log-overview/${log._id}`, name: 'Damage Done', disabled: true,
+      },
+      {
+        key: 'healing-done', route: `/log-overview/${log._id}`, name: 'Healing Done', disabled: true,
+      },
+      {
+        key: 'damage-taken', route: `/log-overview/${log._id}`, name: 'Damage Taken', disabled: true,
+      },
+      {
+        key: 'deaths', route: `/log-overview/${log._id}`, name: 'Deaths', disabled: true,
+      },
+    ];
 
     return (
       <div className="container">
@@ -52,53 +99,58 @@ class LogOverviewPage extends Component {
         ) : (
           <div>
             <PlayerHeader player={getPlayerName(log.name)} image={getPlayerClass(log.raw, getPlayerName(log.name))} career={getPlayerClass(log.raw, getPlayerName(log.name)).split('-').join(' ')} date={moment(log.date).format("MMMM DD, YYYY h:mm A")}/>
+            <SubNavbar links={links} current="overview"/>
             <AreaChart
               damage={filterByCaster(log.damage, "Gorshield")}
               healing={log.healing}
               player={getPlayerName(log.name)}
             />
-            <div className="flex-container">
-              <div className="flex-object">
-                <h5>Damage Done</h5>
-                <Table
-                  data={createRowOutput(log.damage, log.damageCasters, false)}
-                  cells={3}
-                  cellWidth={[2, 8, 2]}
-                  maxHeight="240px"
-                  headers={["Name", "Amount", "DPS"]}
-                />
-              </div>
-              <div className="flex-object">
-                <h5>Healing Done</h5>
-                <Table
-                  data={createRowOutput(log.healing, log.healingCasters, false)}
-                  cells={3}
-                  cellWidth={[2, 8, 2]}
-                  maxHeight="240px"
-                  headers={["Name", "Amount", "HPS"]}
-                />
-              </div>
-              <div className="flex-object">
-                <h5>Damage Taken By Source</h5>
-                <Table
-                  data={createRowInput(log.damageTaken)}
-                  cells={3}
-                  cellWidth={[2, 8, 2]}
-                  headers={["Name", "Amount", "DTPS"]}
-                  maxHeight="240px"
-                />
-              </div>
-              <div className="flex-object">
-                <h5>Deaths</h5>
-                <Table
-                  data={createRowDeaths(log.deaths)}
-                  cells={2}
-                  cellWidth={[3, 8]}
-                  headers={["Name", "Time"]}
-                  maxHeight="240px"
-                />
-              </div>
-            </div>
+            <Grid>
+              <Row>
+                <Column>
+                  <h5>Damage Done</h5>
+                  <Table
+                    data={createRowOutput(log.damage, log.damageCasters, false)}
+                    cells={3}
+                    cellWidth={[2, 8, 2]}
+                    maxHeight="240px"
+                    headers={["Name", "Amount", "DPS"]}
+                  />
+                </Column>
+                <Column>
+                  <h5>Healing Done</h5>
+                  <Table
+                    data={createRowOutput(log.healing, log.healingCasters, false)}
+                    cells={3}
+                    cellWidth={[2, 8, 2]}
+                    maxHeight="240px"
+                    headers={["Name", "Amount", "HPS"]}
+                  />
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <h5>Damage Taken By Source</h5>
+                  <Table
+                    data={createRowInput(log.damageTaken)}
+                    cells={3}
+                    cellWidth={[2, 8, 2]}
+                    headers={["Name", "Amount", "DTPS"]}
+                    maxHeight="240px"
+                  />
+                </Column>
+                <Column>
+                  <h5>Deaths</h5>
+                  <Table
+                    data={createRowDeaths(log.deaths)}
+                    cells={2}
+                    cellWidth={[3, 8]}
+                    headers={["Name", "Time"]}
+                    maxHeight="240px"
+                  />
+                </Column>
+              </Row>
+            </Grid>
           </div>
         )}
       </div>
@@ -116,7 +168,7 @@ function mapStateToProps(state) {
 function calculateHighestAmount(object, casters, target) {
   let highestAmount = 0;
   if (object && casters) {
-    casters.forEach(caster => {
+    casters.forEach((caster) => {
       const totalAmount = calculateTotalAmount(object, caster, target);
       if (totalAmount > highestAmount) highestAmount = totalAmount;
     });
@@ -127,7 +179,7 @@ function calculateHighestAmount(object, casters, target) {
 
 function calculateHighestAmountBySpell(object, spells) {
   let highestAmount = 0;
-  spells.forEach(spell => {
+  spells.forEach((spell) => {
     const totalAmount = calculateDamageTotalForAbility(object, spell);
     if (totalAmount > highestAmount) highestAmount = totalAmount;
   });
@@ -147,7 +199,7 @@ function createRowOutput(object, casters, target) {
   const rows = [];
 
   if (object && casters) {
-    casters.forEach(caster => {
+    casters.forEach((caster) => {
       const totalAmount = calculateTotalAmount(object, caster, target);
       let perSecondAmount = calculatePerSecond(object, caster, target);
       if (perSecondAmount === Infinity || isNaN(perSecondAmount))
@@ -157,14 +209,14 @@ function createRowOutput(object, casters, target) {
         rowData.push({
           caster,
           totalAmount,
-          perSecondAmount
+          perSecondAmount,
         });
 
         rowData = rowData.sort(Comparator);
       }
     });
 
-    rowData.forEach(row => {
+    rowData.forEach((row) => {
       rows.push([
         <Link to="/">{row.caster}</Link>,
         <span>
@@ -176,7 +228,7 @@ function createRowOutput(object, casters, target) {
             max={max}
           />
         </span>,
-        row.perSecondAmount
+        row.perSecondAmount,
       ]);
     });
   }
@@ -191,24 +243,24 @@ function createRowInput(object) {
   let rowData = [];
   const rows = [];
 
-  allSpells.forEach(spell => {
+  allSpells.forEach((spell) => {
     const totalAmount = calculateDamageTotalForAbility(object, spell);
     let perSecondAmount = calculateTakenPerSecond(object, spell);
-    if (perSecondAmount === Infinity || isNaN(perSecondAmount))
+    if (perSecondAmount === Infinity || isNaN(perSecondAmount)) {
       perSecondAmount = 1;
-
+    }
     if (totalAmount > 0) {
       rowData.push({
         spell,
         totalAmount,
-        perSecondAmount
+        perSecondAmount,
       });
 
       rowData = rowData.sort(Comparator);
     }
   });
 
-  rowData.forEach(row => {
+  rowData.forEach((row) => {
     rows.push([
       <Link to="/">{row.spell}</Link>,
       <span>
@@ -220,7 +272,7 @@ function createRowInput(object) {
           max={max}
         />
       </span>,
-      row.perSecondAmount
+      row.perSecondAmount,
     ]);
   });
 
@@ -251,4 +303,4 @@ function getPlayerClass(object, player) {
   return career;
 }
 
-export default connect(mapStateToProps, { getLogByID })(LogOverviewPage);
+export default connect(mapStateToProps, { getLogByID })(Overview);
