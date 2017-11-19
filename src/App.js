@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import Overview from './components/Log/Overview';
+import Log from './components/Log';
+import DamageDetails from './components/Log/DamageDetails';
 
 const App = ({ location }) => (
   <div>
@@ -14,7 +15,13 @@ const App = ({ location }) => (
       path="/log-overview/:id"
       location={location}
       exact
-      component={Overview}
+      component={Log}
+    />
+    <Route
+      path="/damage-details/:id"
+      location={location}
+      exact
+      component={DamageDetails}
     />
     <footer style={{ width: "100%", height: "200px", background: "#16191C" }} />
   </div>

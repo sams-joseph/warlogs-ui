@@ -39,7 +39,7 @@ class HomePage extends Component {
             {moment(log.date).format("MMMM DD, YYYY h:mm A")}
           </MaterialTableRowColumn>
           <MaterialTableRowColumn>
-            <Link to={`/log-overview/${log._id}`}>{log.name}</Link>
+            <Link to={`/log-overview/${log._id}?type=overview`}>{log.name}</Link>
           </MaterialTableRowColumn>
         </MaterialTableRow>
       );

@@ -32,7 +32,7 @@ const TooltipContent = ({ payload }) => {
   );
 };
 
-class AreaChart extends Component {
+class OverviewChart extends Component {
   constructor() {
     super();
     this.state = {
@@ -137,4 +137,4 @@ function createPerSecondChartData(object) {
 }
 
 
-export default AreaChart;
+export default OverviewChart;

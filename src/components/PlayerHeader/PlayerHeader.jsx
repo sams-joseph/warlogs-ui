@@ -13,16 +13,17 @@ const StyledDiv = styled.div`
 `;
 
 const HeadingsContainer = styled.div`
+  justify-content: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 `;
 
 const Avatar = styled.img`
   display: block;
-  height: 40px;
+  height: 50px;
   margin-right: 20px;
-  width: 40px;
+  width: 50px;
+  border-radius: 25px;
 `;
 
 const Heading = styled.span`
@@ -30,6 +31,7 @@ const Heading = styled.span`
   display: block;
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 5px;
 `;
 
 const SubHeading = styled.span`
@@ -42,7 +44,7 @@ const SubHeading = styled.span`
 const DateContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const DateHeading = styled.span`
@@ -51,6 +53,7 @@ const DateHeading = styled.span`
   font-size: 14px;
   font-weight: bold;
   text-align: right;
+  margin-bottom: 5px;
 `;
 
 const Date = styled.span`

@@ -5,7 +5,8 @@ import moment from 'moment';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
-import OverviewChart from '../../Visualizations/OverviewChart';
+import AreaChart from '../../AreaChart';
+import DamageDoneChart from '../../Visualizations/DamageDoneChart';
 import {
   calculateTotalAmount,
   calculatePerSecond,
@@ -170,7 +171,7 @@ function createRowDeaths(objects) {
   return rows;
 }
 
-const Overview = ({ log, success, player }) => (
+const DamageDone = ({ log, success, player }) => (
   <div>
     {!success ? (
       <CircularProgress
@@ -184,55 +185,20 @@ const Overview = ({ log, success, player }) => (
     ) : (
       <Grid>
         <div>
-          <OverviewChart
+          <DamageDoneChart
             damage={filterByCaster(log.damage, player)}
-            healing={log.healing}
             player={getPlayerName(log.name)}
           />
         </div>
         <Row>
-          <Column>
-            <h5>Damage Done</h5>
-            <Table
-              data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage')}
-              cells={3}
-              cellWidth={[2, 8, 2]}
-              maxHeight="240px"
-              headers={['Name', 'Amount', 'DPS']}
-            />
-          </Column>
-          <Column>
-            <h5>Healing Done</h5>
-            <Table
-              data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing')}
-              cells={3}
-              cellWidth={[2, 8, 2]}
-              maxHeight="240px"
-              headers={['Name', 'Amount', 'HPS']}
-            />
-          </Column>
-        </Row>
-        <Row>
-          <Column>
-            <h5>Damage Taken By Source</h5>
-            <Table
-              data={createRowInput(log.damageTaken)}
-              cells={3}
-              cellWidth={[2, 8, 2]}
-              headers={['Name', 'Amount', 'DTPS']}
-              maxHeight="240px"
-            />
-          </Column>
-          <Column>
-            <h5>Deaths</h5>
-            <Table
-              data={createRowDeaths(log.deaths)}
-              cells={2}
-              cellWidth={[3, 8]}
-              headers={['Name', 'Time']}
-              maxHeight="240px"
-            />
-          </Column>
+          <h5>Damage Done</h5>
+          <Table
+            data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage')}
+            cells={3}
+            cellWidth={[2, 8, 2]}
+            maxHeight="inherit"
+            headers={['Name', 'Amount', 'DPS']}
+          />
         </Row>
       </Grid>
     )}
@@ -240,4 +206,4 @@ const Overview = ({ log, success, player }) => (
 );
 
 
-export default Overview;
+export default DamageDone;
