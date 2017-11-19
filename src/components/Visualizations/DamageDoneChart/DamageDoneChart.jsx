@@ -17,12 +17,11 @@ const TooltipContent = ({ payload }) => {
     <div
       style={{
         background: "#202529",
-        padding: "10px 30px 10px 10px",
+        padding: "10px",
         color: "#F3F5F8"
       }}
     >
-      {/* <div style={{ color: "#FFE276" }}>{data && data.time}</div> */}
-      <p style={{ color: "#FF403C", marginTop: "0" }}>
+      <p style={{ color: "#FF403C", margin: '10px 0' }}>
         DPS: <span style={{ color: "#F3F5F8" }}>{data && data.rDamage}</span>
       </p>
     </div>

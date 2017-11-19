@@ -16,7 +16,7 @@ import { getLogByID } from '../../actions/logs';
 const Container = styled.div`
   position: relative;
   max-width: 1240px;
-  padding: 70px 20px;
+  padding: 30px 20px;
   margin: 0 auto;
   min-height: calc(100vh - 255px);
 `;

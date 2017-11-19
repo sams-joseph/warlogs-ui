@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
@@ -9,9 +8,6 @@ import DamageDoneChart from '../../Visualizations/DamageDoneChart';
 import {
   calculateTotalAmount,
   calculatePerSecond,
-  getSpellsCast,
-  calculateDamageTotalForAbility,
-  calculateTakenPerSecond,
   getPlayerName,
   filterByCaster,
 } from '../../../utils/data';
@@ -25,24 +21,6 @@ const Row = styled.div`
   flex-wrap: wrap;
 `;
 
-const Column = styled.div`
-  width: 50%;
-  padding: 10px;
-  
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    padding-right: 0;
-  }
-
-  @media(max-width: 700px) {
-    width: 100%;
-    padding: 0;
-  }
-`;
-
 function calculateHighestAmount(object, casters, target) {
   let highestAmount = 0;
   if (object && casters) {
@@ -51,16 +29,6 @@ function calculateHighestAmount(object, casters, target) {
       if (totalAmount > highestAmount) highestAmount = totalAmount;
     });
   }
-
-  return highestAmount;
-}
-
-function calculateHighestAmountBySpell(object, spells) {
-  let highestAmount = 0;
-  spells.forEach((spell) => {
-    const totalAmount = calculateDamageTotalForAbility(object, spell);
-    if (totalAmount > highestAmount) highestAmount = totalAmount;
-  });
 
   return highestAmount;
 }
@@ -114,62 +82,6 @@ function createRowOutput(object, casters, target, id, filter) {
   return rows;
 }
 
-function createRowInput(object) {
-  if (!object) return;
-  const allSpells = getSpellsCast(object);
-  const max = calculateHighestAmountBySpell(object, allSpells);
-  let rowData = [];
-  const rows = [];
-
-  allSpells.forEach((spell) => {
-    const totalAmount = calculateDamageTotalForAbility(object, spell);
-    let perSecondAmount = calculateTakenPerSecond(object, spell);
-    if (perSecondAmount === Infinity || isNaN(perSecondAmount)) {
-      perSecondAmount = 1;
-    }
-    if (totalAmount > 0) {
-      rowData.push({
-        spell,
-        totalAmount,
-        perSecondAmount,
-      });
-
-      rowData = rowData.sort(Comparator);
-    }
-  });
-
-  rowData.forEach((row) => {
-    rows.push([
-      <Link to="/">{row.spell}</Link>,
-      <span>
-        {row.totalAmount}
-        <LinearProgress
-          value={row.totalAmount}
-          mode="determinate"
-          style={{ height: '6px' }}
-          max={max}
-        />
-      </span>,
-      row.perSecondAmount,
-    ]);
-  });
-
-  return rows;
-}
-
-function createRowDeaths(objects) {
-  if (!objects) return;
-  const rows = [];
-  objects.forEach((object) => {
-    rows.push([
-      object.player,
-      moment(object.timestamp.dateTime).format('MMMM DD, YYYY h:mm A'),
-    ]);
-  });
-
-  return rows;
-}
-
 const DamageDone = ({ log, success, player }) => (
   <div>
     {!success ? (
@@ -183,7 +95,7 @@ const DamageDone = ({ log, success, player }) => (
       />
     ) : (
       <Grid>
-        <div>
+        <div style={{ marginBottom: '10px' }}>
           <DamageDoneChart
             damage={filterByCaster(log.damage, player)}
             player={getPlayerName(log.name)}

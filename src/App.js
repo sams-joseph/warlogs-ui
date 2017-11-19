@@ -4,12 +4,21 @@ import PropTypes from "prop-types";
 
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
+import Alert from './components/Alert';
 import Log from './components/Log';
 import DamageDetails from './components/Log/DamageDetails';
 
 const App = ({ location }) => (
   <div>
     <Navbar />
+    <Alert info={{
+      heading: '[RELEASE] 11/19/2017',
+      list: [
+        'Added player header based off of the log uploaded',
+        'Added Damage Done tab to log overview page',
+        'Began laying the framework for damage done details for each unit'
+      ]}}
+    />
     <Route path="/" location={location} exact component={HomePage} />
     <Route
       path="/log-overview/:id"
