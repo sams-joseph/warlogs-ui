@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -42,7 +43,16 @@ class Alert extends Component {
     super();
 
     this.state = {
+      title: String,
+      body: String,
     };
+  }
+
+  componentDidMount() {
+    axios.get('https://api.github.com/search/issues?q=repo:sams-joseph/warlogs-ui+type:pr+label:release&order=desc&page=1&per_page=1')
+      .then((data) => {
+        this.setState({ title: data.data.items[0].title, body: data.data.items[0].body });
+      });
   }
 
   onClick = () => {
@@ -53,17 +63,18 @@ class Alert extends Component {
   };
 
   render() {
-    const { info } = this.props;
+    const updateBody = this.state.body.toString().split('-');
+    const update = updateBody.splice(1, updateBody.length);
 
     if (!localStorage.getItem('dismiss') && !this.state.dismissed && Number(localStorage.getItem('dismiss')) < 1235) {
       return (
         <StyledDiv>
           <AlertContainer>
             <div>
-              <h4>{info.heading}</h4>
+              <h4>{this.state.title}</h4>
               <ul>
                 {
-                  info.list.map(listItem => <li>{listItem}</li>)
+                  update.map(listItem => <li>{listItem}</li>)
                 }
               </ul>
             </div>

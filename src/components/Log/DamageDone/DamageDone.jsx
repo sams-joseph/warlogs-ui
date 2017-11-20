@@ -9,7 +9,6 @@ import {
   calculateTotalAmount,
   calculatePerSecond,
   getPlayerName,
-  filterByCaster,
 } from '../../../utils/data';
 
 const Grid = styled.div`
