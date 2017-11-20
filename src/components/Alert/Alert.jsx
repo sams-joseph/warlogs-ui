@@ -45,19 +45,24 @@ class Alert extends Component {
     this.state = {
       title: String,
       body: String,
+      number: Number,
     };
   }
 
   componentDidMount() {
     axios.get('https://api.github.com/search/issues?q=repo:sams-joseph/warlogs-ui+type:pr+label:release&order=desc&page=1&per_page=1')
       .then((data) => {
-        this.setState({ title: data.data.items[0].title, body: data.data.items[0].body });
+        this.setState({
+          title: data.data.items[0].title,
+          body: data.data.items[0].body,
+          number: data.data.items[0].number,
+        });
       });
   }
 
   onClick = () => {
     if (localStorage) {
-      localStorage.setItem('dismiss', 1234);
+      localStorage.setItem('dismiss', this.state.number);
     }
     this.setState({ dismissed: true });
   };
@@ -66,7 +71,7 @@ class Alert extends Component {
     const updateBody = this.state.body.toString().split('-');
     const update = updateBody.splice(1, updateBody.length);
 
-    if (!localStorage.getItem('dismiss') && !this.state.dismissed && Number(localStorage.getItem('dismiss')) < 1235) {
+    if (!localStorage.getItem('dismiss') && !this.state.dismissed && Number(localStorage.getItem('dismiss')) < this.state.number) {
       return (
         <StyledDiv>
           <AlertContainer>
@@ -74,7 +79,7 @@ class Alert extends Component {
               <h4>{this.state.title}</h4>
               <ul>
                 {
-                  update.map(listItem => <li>{listItem}</li>)
+                  update.map((listItem, index) => <li key={`enhancements_${index}`}>{listItem}</li>)
                 }
               </ul>
             </div>
