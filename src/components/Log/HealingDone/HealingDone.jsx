@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
-import DamageDoneChart from '../../Visualizations/DamageDoneChart';
+import HealingDoneChart from '../../Visualizations/HealingDoneChart';
 import {
   calculateTotalAmount,
   calculatePerSecond,
   getPlayerName,
-  filterByCaster,
 } from '../../../utils/data';
 
 const Grid = styled.div`
@@ -82,7 +81,7 @@ function createRowOutput(object, casters, target, id, filter) {
   return rows;
 }
 
-const DamageDone = ({ log, success, player }) => (
+const HealingDone = ({ log, success, player }) => (
   <div>
     {!success ? (
       <CircularProgress
@@ -96,19 +95,19 @@ const DamageDone = ({ log, success, player }) => (
     ) : (
       <Grid>
         <div style={{ marginBottom: '10px' }}>
-          <DamageDoneChart
-            damage={log.damage}
+          <HealingDoneChart
+            healing={log.healing}
             player={getPlayerName(log.name)}
           />
         </div>
         <Row>
-          <h5>Damage Done</h5>
+          <h5>Healing Done</h5>
           <Table
-            data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage')}
+            data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing')}
             cells={3}
             cellWidth={[2, 8, 2]}
             maxHeight="inherit"
-            headers={['Name', 'Amount', 'DPS']}
+            headers={['Name', 'Amount', 'HPS']}
           />
         </Row>
       </Grid>
@@ -117,4 +116,4 @@ const DamageDone = ({ log, success, player }) => (
 );
 
 
-export default DamageDone;
+export default HealingDone;

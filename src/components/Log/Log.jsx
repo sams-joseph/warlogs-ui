@@ -8,6 +8,7 @@ import PlayerHeader from '../PlayerHeader';
 import SubNavbar from '../SubNavbar';
 import Overview from './Overview';
 import DamageDone from './DamageDone';
+import HealingDone from './HealingDone';
 
 import { getPlayerName } from '../../utils/data';
 
@@ -16,7 +17,7 @@ import { getLogByID } from '../../actions/logs';
 const Container = styled.div`
   position: relative;
   max-width: 1240px;
-  padding: 30px 20px;
+  padding: 30px 20px 70px 20px;
   margin: 0 auto;
   min-height: calc(100vh - 255px);
 `;
@@ -60,7 +61,7 @@ class Log extends Component {
         key: 'damage-done', route: `/log-overview/${log._id}?type=damage-done`, name: 'Damage Done', disabled: false,
       },
       {
-        key: 'healing-done', route: `/log-overview/${log._id}?type=overview`, name: 'Healing Done', disabled: true,
+        key: 'healing-done', route: `/log-overview/${log._id}?type=healing-done`, name: 'Healing Done', disabled: false,
       },
       {
         key: 'damage-taken', route: `/log-overview/${log._id}?type=overview`, name: 'Damage Taken', disabled: true,
@@ -103,6 +104,16 @@ class Log extends Component {
             {
               query.type === 'damage-done' && (
                 <DamageDone
+                  id={this.props.match.params.id}
+                  log={log}
+                  success={success}
+                  player={getPlayerName(log.name)}
+                />
+              )
+            }
+            {
+              query.type === 'healing-done' && (
+                <HealingDone
                   id={this.props.match.params.id}
                   log={log}
                   success={success}

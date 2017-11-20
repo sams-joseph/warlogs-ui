@@ -18,17 +18,17 @@ const TooltipContent = ({ payload }) => {
       style={{
         background: '#202529',
         padding: '10px',
-        color: '#F3F5F8'
+        color: '#F3F5F8',
       }}
     >
-      <p style={{ color: '#FF403C', margin: '10px 0' }}>
-        DPS: <span style={{ color: '#F3F5F8' }}>{data && data.rDamage}</span>
+      <p style={{ color: '#42f4d4', margin: '10px 0' }}>
+        HPS: <span style={{ color: '#F3F5F8' }}>{data && data.rHealing}</span>
       </p>
     </div>
   );
 };
 
-class DamageDoneChart extends Component {
+class HealingDoneChart extends Component {
   constructor() {
     super();
     this.state = {
@@ -36,20 +36,20 @@ class DamageDoneChart extends Component {
     };
   }
   render() {
-    const { damage } = this.props;
+    const { healing } = this.props;
     const chartData = [];
     const tooltipData = [];
-    const damageData = createPerSecondChartData(damage);
+    const healingData = createPerSecondChartData(healing);
 
-    for (let i = 0; i < damageData.length; i++) {
+    for (let i = 0; i < healingData.length; i++) {
       chartData.push({
-        rDamage: damageData[i],
+        rHealing: healingData[i],
         time: i,
       });
 
       tooltipData.push({
-        time: damage[i].timestamp.time,
-        rDamage: damageData[i],
+        time: healing[i].timestamp.time,
+        rDamage: healingData[i],
       });
     }
 
@@ -67,7 +67,7 @@ class DamageDoneChart extends Component {
               top: 30,
               right: 50,
               left: -10,
-              bottom: 0
+              bottom: 0,
             }}
           >
             <XAxis dataKey="time" stroke="#67737D" />
@@ -76,10 +76,10 @@ class DamageDoneChart extends Component {
             <Tooltip content={<TooltipContent />} />
             <Area
               type="monotone"
-              dataKey="rDamage"
-              stroke="#f44a41"
+              dataKey="rHealing"
+              stroke="#42f4d4"
               fillOpacity={0.2}
-              fill="#f44a41"
+              fill="#42f4d4"
             />
           </AreaChartRecharts>
         </ResponsiveContainer>
@@ -113,4 +113,4 @@ function createPerSecondChartData(object) {
 }
 
 
-export default DamageDoneChart;
+export default HealingDoneChart;
