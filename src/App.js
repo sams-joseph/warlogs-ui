@@ -17,7 +17,8 @@ const App = ({ location }) => (
         'Added Player header based off of the log uploaded',
         'Added Damage done tab to log overview page',
         'Added Healing done tab to log overview page',
-        'Began laying the framework for damage done details for each unit'
+        'Began laying the framework for damage done details for each unit',
+        'Added notifications for releases'
       ]}}
     />
     <Route path="/" location={location} exact component={HomePage} />
