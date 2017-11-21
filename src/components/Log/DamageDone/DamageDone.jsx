@@ -5,6 +5,8 @@ import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
 import DamageDoneChart from '../../Visualizations/DamageDoneChart';
+import Percent from '../../Visualizations/Percent';
+import constants from '../../constants';
 import {
   calculateTotalAmount,
   calculatePerSecond,
@@ -38,7 +40,7 @@ function Comparator(a, b) {
   return 0;
 }
 
-function createRowOutput(object, casters, target, id, filter) {
+function createRowOutput(object, casters, target, id, filter, color) {
   const max = calculateHighestAmount(object, casters, target);
   let rowData = [];
   const rows = [];
@@ -66,12 +68,7 @@ function createRowOutput(object, casters, target, id, filter) {
         <Link to={`/${filter}-details/${id}?player=${row.caster}`}>{row.caster}</Link>,
         <span>
           {row.totalAmount}
-          <LinearProgress
-            value={row.totalAmount}
-            mode="determinate"
-            style={{ height: '6px' }}
-            max={max}
-          />
+          <Percent percent={(row.totalAmount / max) * 100} color={color} />
         </span>,
         row.perSecondAmount,
       ]);
@@ -103,7 +100,7 @@ const DamageDone = ({ log, success, player }) => (
         <Row>
           <h5>Damage Done</h5>
           <Table
-            data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage')}
+            data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.compliment2ColorLight, constants.compliment2Color])}
             cells={3}
             cellWidth={[2, 8, 2]}
             maxHeight="inherit"

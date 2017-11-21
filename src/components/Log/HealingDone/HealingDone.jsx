@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
 import HealingDoneChart from '../../Visualizations/HealingDoneChart';
+import Percent from '../../Visualizations/Percent';
+import constants from '../../constants';
 import {
   calculateTotalAmount,
   calculatePerSecond,
@@ -38,7 +39,7 @@ function Comparator(a, b) {
   return 0;
 }
 
-function createRowOutput(object, casters, target, id, filter) {
+function createRowOutput(object, casters, target, id, filter, color) {
   const max = calculateHighestAmount(object, casters, target);
   let rowData = [];
   const rows = [];
@@ -66,12 +67,7 @@ function createRowOutput(object, casters, target, id, filter) {
         <Link to={`/${filter}-details/${id}?player=${row.caster}`}>{row.caster}</Link>,
         <span>
           {row.totalAmount}
-          <LinearProgress
-            value={row.totalAmount}
-            mode="determinate"
-            style={{ height: '6px' }}
-            max={max}
-          />
+          <Percent percent={(row.totalAmount / max) * 100} color={color} />
         </span>,
         row.perSecondAmount,
       ]);
@@ -103,7 +99,7 @@ const HealingDone = ({ log, success, player }) => (
         <Row>
           <h5>Healing Done</h5>
           <Table
-            data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing')}
+            data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.complimentColorLight, constants.complimentColor])}
             cells={3}
             cellWidth={[2, 8, 2]}
             maxHeight="inherit"
