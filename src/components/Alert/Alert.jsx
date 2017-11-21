@@ -17,6 +17,7 @@ const AlertContainer = styled.div`
   padding: 10px 10px;
   width: 100%;
   background: ${constants.complimentColor};
+  box-shadow: 0px 1px 6px rgba(0,0,0,0.75);
 
   & h4 {
     margin: 0 0 5px 0;

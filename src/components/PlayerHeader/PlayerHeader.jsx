@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import constants from '../constants';
 
 const Container = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const Avatar = styled.img`
   margin-right: 20px;
   width: 50px;
   border-radius: 25px;
+  border: 2px solid ${constants.complimentColor}
 `;
 
 const Heading = styled.span`

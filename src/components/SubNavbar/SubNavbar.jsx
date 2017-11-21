@@ -29,6 +29,7 @@ const StyledSection = styled.section`
 
     &:hover {
       color: ${constants.hoverColor};
+      text-decoration: none;
     }
 
     &[disabled] {

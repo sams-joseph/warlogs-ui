@@ -9,9 +9,9 @@ export default {
   hoverColor: '#b6bcc1',
   disabledColor: 'rgba(250, 250, 250, 0.3)',
   darkBackground: '#17141F',
-  stripeColor: '#362e4c',
+  stripeColor: '#332C4A',
   canvasColor: '#2C2640',
-  highlightColor: '#3B325B',
+  highlightColor: '#3A3254',
   almostBlack: '#0E0C13',
   mutedPrimaryColor: 'rgba(146, 96, 240, 0.25)',
 };
