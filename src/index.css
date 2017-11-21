@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: linear-gradient(135deg, rgba(32,28,43,.97), rgba(32,28,43,.97)), url('/images/war-bkg-img-chosen.jpg') no-repeat center !important;
+  background: linear-gradient(135deg, rgba(32,28,43,.90), rgba(32,28,43,.95)), url('/images/war-bkg-img-chosen.jpg') no-repeat center !important;
   background-size: cover !important;
   /* background: #17141F !important; */
 }

@@ -48,7 +48,7 @@ function createRowOutput(object, casters, target, id, filter, color) {
     casters.forEach((caster) => {
       const totalAmount = calculateTotalAmount(object, caster, target);
       let perSecondAmount = calculatePerSecond(object, caster, target);
-      if (perSecondAmount === Infinity || isNaN(perSecondAmount))
+      if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount))
         perSecondAmount = 1;
 
       if (totalAmount > 0) {
@@ -99,7 +99,7 @@ const HealingDone = ({ log, success, player }) => (
         <Row>
           <h5>Healing Done</h5>
           <Table
-            data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.complimentColorLight, constants.complimentColor])}
+            data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
             cells={3}
             cellWidth={[2, 8, 2]}
             maxHeight="inherit"

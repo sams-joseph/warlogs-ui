@@ -12,6 +12,7 @@ import {
 } from "material-ui/Table";
 import CircularProgress from "material-ui/CircularProgress";
 import { getAllLogs } from "../actions/logs";
+import constants from '../components/constants';
 
 class HomePage extends Component {
   constructor() {
@@ -64,7 +65,7 @@ class HomePage extends Component {
               <MaterialTableHeader
                 displaySelectAll={false}
                 adjustForCheckbox={false}
-                style={{ background: "#16191C" }}
+                style={{ background: constants.darkBackground }}
               >
                 <MaterialTableRow>
                   <MaterialTableHeaderColumn>Date</MaterialTableHeaderColumn>

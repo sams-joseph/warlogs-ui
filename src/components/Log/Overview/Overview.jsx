@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
 import OverviewChart from '../../Visualizations/OverviewChart';
@@ -82,7 +81,7 @@ function createRowOutput(object, casters, target, id, filter, color) {
     casters.forEach((caster) => {
       const totalAmount = calculateTotalAmount(object, caster, target);
       let perSecondAmount = calculatePerSecond(object, caster, target);
-      if (perSecondAmount === Infinity || isNaN(perSecondAmount))
+      if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount))
         perSecondAmount = 1;
 
       if (totalAmount > 0) {
@@ -121,7 +120,7 @@ function createRowInput(object, color) {
   allSpells.forEach((spell) => {
     const totalAmount = calculateDamageTotalForAbility(object, spell);
     let perSecondAmount = calculateTakenPerSecond(object, spell);
-    if (perSecondAmount === Infinity || isNaN(perSecondAmount)) {
+    if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount)) {
       perSecondAmount = 1;
     }
     if (totalAmount > 0) {
@@ -186,7 +185,7 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Damage Done</h5>
             <Table
-              data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.compliment2ColorLight, constants.compliment2Color])}
+              data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
               cells={3}
               cellWidth={[2, 8, 2]}
               maxHeight="240px"
@@ -196,7 +195,7 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Healing Done</h5>
             <Table
-              data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.complimentColorLight, constants.complimentColor])}
+              data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
               cells={3}
               cellWidth={[2, 8, 2]}
               maxHeight="240px"
@@ -208,7 +207,7 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Damage Taken By Source</h5>
             <Table
-              data={createRowInput(log.damageTaken, [constants.compliment2ColorLight, constants.compliment2Color])}
+              data={createRowInput(log.damageTaken, [constants.complimentColor, constants.compliment2Color])}
               cells={3}
               cellWidth={[2, 8, 2]}
               headers={['Name', 'Amount', 'DTPS']}
