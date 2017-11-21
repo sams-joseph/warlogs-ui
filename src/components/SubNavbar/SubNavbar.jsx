@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import constants from '../constants';
 
 const StyledMain = styled.main`
-  border-bottom: 1px solid #39444c;
+  border-bottom: 1px solid ${constants.highlightColor};
   margin: 40px 0;
   height: 40px;
   width: 100%;
@@ -27,17 +28,17 @@ const StyledSection = styled.section`
     transition: color 0.125s;
 
     &:hover {
-      color: #b6bcc1;
+      color: ${constants.hoverColor};
     }
 
     &[disabled] {
       pointer-events: none;
-      color: #b6bcc1;
+      color: ${constants.disabledColor};
     }
   }
 
   & .active {
-    border-bottom: 2px solid #009BFF;
+    border-bottom: 2px solid ${constants.complimentColor};
   }
 `;
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import RaisedButton from 'material-ui/RaisedButton';
+import constants from '../constants';
 
 const StyledDiv = styled.div`
   padding: 20px;
@@ -15,8 +16,7 @@ const AlertContainer = styled.div`
   justify-content: space-between;
   padding: 10px 10px;
   width: 100%;
-  background: #344c68;
-  border: 1px solid #4699F8;
+  background: ${constants.complimentColor};
 
   & h4 {
     margin: 0 0 5px 0;
@@ -84,7 +84,7 @@ class Alert extends Component {
               </ul>
             </div>
             <div>
-              <RaisedButton label="dismiss" primary onClick={this.onClick} buttonStyle={{ borderRadius: '2px' }} />
+              <RaisedButton label="dismiss" secondary onClick={this.onClick} style={{ borderRadius: '2px' }} buttonStyle={{ borderRadius: '2px' }} />
             </div>
           </AlertContainer>
         </StyledDiv>

@@ -2,6 +2,8 @@ import React from "react";
 import { Route } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import constants from './components/constants';
+
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import Alert from './components/Alert';
@@ -25,7 +27,7 @@ const App = ({ location }) => (
       exact
       component={DamageDetails}
     />
-    <footer style={{ width: "100%", height: "200px", background: "#16191C" }} />
+    <footer style={{ width: "100%", height: "200px", background: constants.almostBlack }} />
   </div>
 );
 

@@ -7,6 +7,7 @@ import {
   TableRow as MaterialTableRow,
   TableRowColumn as MaterialTableRowColumn
 } from "material-ui/Table";
+import constants from '../constants';
 
 class Table extends Component {
   render() {
@@ -46,7 +47,7 @@ class Table extends Component {
         <MaterialTableHeader
           displaySelectAll={false}
           adjustForCheckbox={false}
-          style={{ background: "#16191C" }}
+          style={{ background: constants.darkBackground }}
         >
           <MaterialTableRow>{headerCells}</MaterialTableRow>
         </MaterialTableHeader>

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import constants from '../constants';
 
 function Navbar() {
   return (
     <header
       style={{
-        background: "#16191C",
+        background: constants.almostBlack,
         height: "55px",
         position: "relative",
         top: "0"

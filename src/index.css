@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #22262e !important;
+  background: #201C2B !important;
 }
 
 .container {
@@ -18,12 +18,13 @@ body {
 }
 
 a {
-  color: #60bfff;
+  color: #D3BAFF;
   text-decoration: none;
 }
 
 a:hover {
-  color: #1ea5ff;
+  color: #E4D4FF;
+  text-decoration: underline;
 }
 
 .flex-container {

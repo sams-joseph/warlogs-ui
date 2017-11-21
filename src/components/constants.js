@@ -1,0 +1,17 @@
+export default {
+  primaryColor: '#9260F0',
+  primaryColorTint: '#6341A3',
+  complimentColor: '#14b866',
+  complimentColorLight: '#1BF588',
+  compliment2Color: '#AD262A',
+  compliment2ColorLight: '#EB3439',
+  accent1Color: '#0D7842',
+  hoverColor: '#b6bcc1',
+  disabledColor: 'rgba(250, 250, 250, 0.3)',
+  darkBackground: '#17141F',
+  stripeColor: '#362e4c',
+  canvasColor: '#2C2640',
+  highlightColor: '#3B325B',
+  almostBlack: '#0E0C13',
+  mutedPrimaryColor: 'rgba(146, 96, 240, 0.25)',
+};
