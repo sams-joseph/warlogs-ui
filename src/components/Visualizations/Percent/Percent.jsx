@@ -26,10 +26,10 @@ const Percent = ({ percent, color }) => (
   </PercentContainer>
 );
 
-const { string, arrayOf } = PropTypes;
+const { number, string, arrayOf } = PropTypes;
 Percent.propTypes = {
-  percent: string,
-  color: arrayOf,
+  percent: number,
+  color: arrayOf(string),
 };
 
 export default Percent;

@@ -19,7 +19,7 @@ class Table extends Component {
           <MaterialTableRowColumn
             key={i}
             style={{
-              width: `${cellWidth[i]}rem`
+              width: cellWidth[i]
             }}
           >
             {row[i]}
@@ -34,7 +34,7 @@ class Table extends Component {
         <MaterialTableHeaderColumn
           key={i}
           style={{
-            width: `${cellWidth[i]}rem`
+            width: cellWidth[i]
           }}
         >
           {headers[i]}
@@ -43,7 +43,7 @@ class Table extends Component {
     }
 
     return (
-      <MaterialTable height={maxHeight}>
+      <MaterialTable height={maxHeight} selectable={false}>
         <MaterialTableHeader
           displaySelectAll={false}
           adjustForCheckbox={false}

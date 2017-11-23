@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   logs: {
@@ -9,7 +9,7 @@ export default {
     parse: fileName =>
       axios
         .get(`${process.env.REACT_APP_API_HOST}/api/logs/parse`, {
-          params: { fileName: fileName }
+          params: { fileName },
         })
         .then(res => res.data),
     getAllLogs: () =>
@@ -17,6 +17,10 @@ export default {
     getLogByID: id =>
       axios
         .get(`${process.env.REACT_APP_API_HOST}/api/logs/${id}`)
-        .then(res => res.data)
-  }
+        .then(res => res.data),
+    getLogFilterUnit: (id, unit) =>
+      axios
+        .get(`${process.env.REACT_APP_API_HOST}/api/logs/filter/${id}?unit=${unit}`)
+        .then(res => res.data),
+  },
 };

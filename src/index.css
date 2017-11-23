@@ -8,7 +8,6 @@ body {
   font-family: sans-serif;
   background: linear-gradient(135deg, rgba(32,28,43,.90), rgba(32,28,43,.95)), url('/images/war-bkg-img-chosen.jpg') no-repeat center !important;
   background-size: cover !important;
-  /* background: #17141F !important; */
 }
 
 .container {
@@ -20,12 +19,12 @@ body {
 }
 
 a {
-  color: #D3BAFF;
+  color: #c0ffda;
   text-decoration: none;
 }
 
 a:hover {
-  color: #E4D4FF;
+  color: #FFFFFF;
   text-decoration: underline;
 }
 

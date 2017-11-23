@@ -97,7 +97,7 @@ function createRowOutput(object, casters, target, id, filter, color) {
 
     rowData.forEach((row) => {
       rows.push([
-        <Link to={`/${filter}-details/${id}?player=${row.caster}`}>{row.caster}</Link>,
+        <Link to={`/${filter}-details/${id}?player=${row.caster}&type=${filter}-done`}>{row.caster}</Link>,
         <span>
           {row.totalAmount}
           <Percent percent={(row.totalAmount / max) * 100} color={color} />
@@ -187,7 +187,7 @@ const Overview = ({ log, success, player }) => (
             <Table
               data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
               cells={3}
-              cellWidth={[2, 8, 2]}
+              cellWidth={['100px', '30%', '30px']}
               maxHeight="240px"
               headers={['Name', 'Amount', 'DPS']}
             />
@@ -197,7 +197,7 @@ const Overview = ({ log, success, player }) => (
             <Table
               data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
               cells={3}
-              cellWidth={[2, 8, 2]}
+              cellWidth={['100px', '30%', '30px']}
               maxHeight="240px"
               headers={['Name', 'Amount', 'HPS']}
             />
@@ -209,7 +209,7 @@ const Overview = ({ log, success, player }) => (
             <Table
               data={createRowInput(log.damageTaken, [constants.complimentColor, constants.compliment2Color])}
               cells={3}
-              cellWidth={[2, 8, 2]}
+              cellWidth={['100px', '30%', '30px']}
               headers={['Name', 'Amount', 'DTPS']}
               maxHeight="240px"
             />
@@ -219,7 +219,7 @@ const Overview = ({ log, success, player }) => (
             <Table
               data={createRowDeaths(log.deaths)}
               cells={2}
-              cellWidth={[3, 8]}
+              cellWidth={['100px', '30%']}
               headers={['Name', 'Time']}
               maxHeight="240px"
             />

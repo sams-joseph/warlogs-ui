@@ -64,7 +64,7 @@ function createRowOutput(object, casters, target, id, filter, color) {
 
     rowData.forEach((row) => {
       rows.push([
-        <Link to={`/${filter}-details/${id}?player=${row.caster}`}>{row.caster}</Link>,
+        <Link to={`/${filter}-details/${id}?player=${row.caster}&type=damage-done`}>{row.caster}</Link>,
         <span>
           {row.totalAmount}
           <Percent percent={(row.totalAmount / max) * 100} color={color} />
