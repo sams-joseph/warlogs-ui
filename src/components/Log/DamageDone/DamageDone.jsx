@@ -101,7 +101,7 @@ const DamageDone = ({ log, success, player }) => (
           <Table
             data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
             cells={3}
-            cellWidth={[2, 8, 2]}
+            cellWidth={['100px', '40%', '30px']}
             maxHeight="inherit"
             headers={['Name', 'Amount', 'DPS']}
           />

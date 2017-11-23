@@ -77,9 +77,9 @@ class HealingDoneChart extends Component {
             <Area
               type="monotone"
               dataKey="rHealing"
-              stroke="#42f4d4"
+              stroke="#1bec83"
               fillOpacity={0.2}
-              fill="#42f4d4"
+              fill="#1bec83"
             />
           </AreaChartRecharts>
         </ResponsiveContainer>
