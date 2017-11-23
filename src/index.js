@@ -10,46 +10,38 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import constants from './components/constants';
 import rootReducer from "./rootReducer";
 
 const muiTheme = getMuiTheme({
   borderRadius: 0,
   palette: {
-    primary1Color: "#009BFF",
-    primary2Color: "#00D2FF",
-    primary3Color: "#4C555C",
-    accent1Color: "#009BFF",
-    accent2Color: "#4C555C",
-    accent3Color: "#f3f5f8",
-    canvasColor: "#262A33",
-    textColor: "#f3f5f8",
-    borderColor: "#4C555C"
-  },
-  tabs: {
-    backgroundColor: "#22262e"
+    primary1Color: constants.primaryColor,
+    primary3Color: constants.darkBackground,
+    accent1Color: constants.accent1Color,
+    accent3Color: '#FFFFFF',
+    canvasColor: constants.canvasColor,
+    textColor: '#f3f5f8',
   },
   table: {
-    backgroundColor: "#20242B"
+    backgroundColor: constants.canvasColor,
   },
   tableHeaderColumn: {
-    height: 55
+    height: 55,
   },
   tableRow: {
-    stripeColor: "#282D36",
-    borderColor: "#2E333D",
-    height: 40
+    stripeColor: constants.stripeColor,
+    borderColor: constants.highlightColor,
+    height: 40,
   },
   tableRowColumn: {
-    height: 40
+    height: 40,
   },
-  inkBar: {
-    backgroundColor: "#009BFF"
-  }
 });
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk)),
 );
 
 ReactDOM.render(

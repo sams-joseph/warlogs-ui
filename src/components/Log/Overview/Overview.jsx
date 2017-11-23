@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import Table from '../../Table';
 import OverviewChart from '../../Visualizations/OverviewChart';
+import Percent from '../../Visualizations/Percent';
 import {
   calculateTotalAmount,
   calculatePerSecond,
@@ -15,6 +15,7 @@ import {
   getPlayerName,
   filterByCaster,
 } from '../../../utils/data';
+import constants from '../../constants';
 
 const Grid = styled.div`
   display: block;
@@ -71,7 +72,7 @@ function Comparator(a, b) {
   return 0;
 }
 
-function createRowOutput(object, casters, target, id, filter) {
+function createRowOutput(object, casters, target, id, filter, color) {
   const max = calculateHighestAmount(object, casters, target);
   let rowData = [];
   const rows = [];
@@ -80,7 +81,7 @@ function createRowOutput(object, casters, target, id, filter) {
     casters.forEach((caster) => {
       const totalAmount = calculateTotalAmount(object, caster, target);
       let perSecondAmount = calculatePerSecond(object, caster, target);
-      if (perSecondAmount === Infinity || isNaN(perSecondAmount))
+      if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount))
         perSecondAmount = 1;
 
       if (totalAmount > 0) {
@@ -96,15 +97,10 @@ function createRowOutput(object, casters, target, id, filter) {
 
     rowData.forEach((row) => {
       rows.push([
-        <Link to={`/${filter}-details/${id}?player=${row.caster}`}>{row.caster}</Link>,
+        <Link to={`/${filter}-details/${id}?player=${row.caster}&type=${filter}-done`}>{row.caster}</Link>,
         <span>
           {row.totalAmount}
-          <LinearProgress
-            value={row.totalAmount}
-            mode="determinate"
-            style={{ height: '6px' }}
-            max={max}
-          />
+          <Percent percent={(row.totalAmount / max) * 100} color={color} />
         </span>,
         row.perSecondAmount,
       ]);
@@ -114,7 +110,7 @@ function createRowOutput(object, casters, target, id, filter) {
   return rows;
 }
 
-function createRowInput(object) {
+function createRowInput(object, color) {
   if (!object) return;
   const allSpells = getSpellsCast(object);
   const max = calculateHighestAmountBySpell(object, allSpells);
@@ -124,7 +120,7 @@ function createRowInput(object) {
   allSpells.forEach((spell) => {
     const totalAmount = calculateDamageTotalForAbility(object, spell);
     let perSecondAmount = calculateTakenPerSecond(object, spell);
-    if (perSecondAmount === Infinity || isNaN(perSecondAmount)) {
+    if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount)) {
       perSecondAmount = 1;
     }
     if (totalAmount > 0) {
@@ -143,12 +139,7 @@ function createRowInput(object) {
       <Link to="/">{row.spell}</Link>,
       <span>
         {row.totalAmount}
-        <LinearProgress
-          value={row.totalAmount}
-          mode="determinate"
-          style={{ height: '6px' }}
-          max={max}
-        />
+        <Percent percent={(row.totalAmount / max) * 100} color={color} />
       </span>,
       row.perSecondAmount,
     ]);
@@ -194,9 +185,9 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Damage Done</h5>
             <Table
-              data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage')}
+              data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
               cells={3}
-              cellWidth={[2, 8, 2]}
+              cellWidth={['100px', '30%', '30px']}
               maxHeight="240px"
               headers={['Name', 'Amount', 'DPS']}
             />
@@ -204,9 +195,9 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Healing Done</h5>
             <Table
-              data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing')}
+              data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
               cells={3}
-              cellWidth={[2, 8, 2]}
+              cellWidth={['100px', '30%', '30px']}
               maxHeight="240px"
               headers={['Name', 'Amount', 'HPS']}
             />
@@ -216,9 +207,9 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Damage Taken By Source</h5>
             <Table
-              data={createRowInput(log.damageTaken)}
+              data={createRowInput(log.damageTaken, [constants.complimentColor, constants.compliment2Color])}
               cells={3}
-              cellWidth={[2, 8, 2]}
+              cellWidth={['100px', '30%', '30px']}
               headers={['Name', 'Amount', 'DTPS']}
               maxHeight="240px"
             />
@@ -228,7 +219,7 @@ const Overview = ({ log, success, player }) => (
             <Table
               data={createRowDeaths(log.deaths)}
               cells={2}
-              cellWidth={[3, 8]}
+              cellWidth={['100px', '30%']}
               headers={['Name', 'Time']}
               maxHeight="240px"
             />

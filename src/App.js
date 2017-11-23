@@ -2,6 +2,8 @@ import React from "react";
 import { Route } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import constants from './components/constants';
+
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import Alert from './components/Alert';
@@ -11,16 +13,7 @@ import DamageDetails from './components/Log/DamageDetails';
 const App = ({ location }) => (
   <div>
     <Navbar />
-    <Alert info={{
-      heading: '[RELEASE] 11/19/2017',
-      list: [
-        'Added Player header based off of the log uploaded',
-        'Added Damage done tab to log overview page',
-        'Added Healing done tab to log overview page',
-        'Began laying the framework for damage done details for each unit',
-        'Added notifications for releases'
-      ]}}
-    />
+    <Alert />
     <Route path="/" location={location} exact component={HomePage} />
     <Route
       path="/log-overview/:id"
@@ -34,7 +27,7 @@ const App = ({ location }) => (
       exact
       component={DamageDetails}
     />
-    <footer style={{ width: "100%", height: "200px", background: "#16191C" }} />
+    <footer style={{ width: "100%", height: "200px", background: constants.almostBlack }} />
   </div>
 );
 

@@ -6,7 +6,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #22262e !important;
+  background: linear-gradient(135deg, rgba(32,28,43,.90), rgba(32,28,43,.95)), url('/images/war-bkg-img-chosen.jpg') no-repeat center !important;
+  background-size: cover !important;
 }
 
 .container {
@@ -18,12 +19,13 @@ body {
 }
 
 a {
-  color: #60bfff;
+  color: #c0ffda;
   text-decoration: none;
 }
 
 a:hover {
-  color: #1ea5ff;
+  color: #FFFFFF;
+  text-decoration: underline;
 }
 
 .flex-container {

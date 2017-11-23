@@ -4,12 +4,12 @@ import {
   LOGS_UPLOAD_FAILURE,
   LOGS_PARSED_STARTED,
   LOGS_REQUEST_STARTED,
-  LOG_REQUEST_STARTED
-} from "../types";
+  LOG_REQUEST_STARTED,
+} from '../types';
 
 export default function logs(
   state = { success: false, logs: [], log: [] },
-  action = {}
+  action = {},
 ) {
   switch (action.type) {
     case LOGS_UPLOAD_STARTED:
