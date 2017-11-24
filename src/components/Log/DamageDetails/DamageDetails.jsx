@@ -61,10 +61,12 @@ function Comparator(a, b) {
 }
 
 function getSpellIcon(object, spell) {
-  let spellIcon = '02400';
+  const attackIcon = '23418';
+  let spellIcon = '23419';
   if (object && spell) {
     object.forEach((obj) => {
-      if (obj.spell.spellName === spell && obj.spell.meta) {
+      if (spell === 'attack') spellIcon = attackIcon;
+      else if (obj.spell.spellName === spell && obj.spell.meta) {
         spellIcon = obj.spell.meta.imageID;
       }
     });
