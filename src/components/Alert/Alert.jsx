@@ -72,7 +72,7 @@ class Alert extends Component {
     const updateBody = this.state.body.toString().split('-');
     const update = updateBody.splice(1, updateBody.length);
 
-    if (!localStorage.getItem('dismiss') && !this.state.dismissed && Number(localStorage.getItem('dismiss')) < this.state.number) {
+    if (localStorage && !this.state.dismissed && Number(localStorage.getItem('dismiss')) < this.state.number) {
       return (
         <StyledDiv>
           <AlertContainer>
