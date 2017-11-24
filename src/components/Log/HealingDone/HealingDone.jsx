@@ -101,7 +101,7 @@ const HealingDone = ({ log, success, player }) => (
           <Table
             data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
             cells={3}
-            cellWidth={[2, 8, 2]}
+            cellWidth={['100px', '40%', '30px']}
             maxHeight="inherit"
             headers={['Name', 'Amount', 'HPS']}
           />

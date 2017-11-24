@@ -9,6 +9,7 @@ import {
   Area,
   ResponsiveContainer,
 } from 'recharts';
+import constants from '../../constants';
 
 const TooltipContent = ({ payload }) => {
   const data = payload && payload[0] && payload[0].payload;
@@ -70,16 +71,16 @@ class HealingDoneChart extends Component {
               bottom: 0,
             }}
           >
-            <XAxis dataKey="time" stroke="#67737D" />
-            <YAxis stroke="#67737D" />
-            <CartesianGrid stroke="#505050" strokeWidth={1} opacity={0.5} />
+            <XAxis dataKey="time" stroke={constants.disabledColor} />
+            <YAxis stroke={constants.disabledColor} />
+            <CartesianGrid stroke={constants.highlightColor} strokeWidth={1} opacity={0.5} />
             <Tooltip content={<TooltipContent />} />
             <Area
               type="monotone"
               dataKey="rHealing"
-              stroke="#42f4d4"
+              stroke="#1bec83"
               fillOpacity={0.2}
-              fill="#42f4d4"
+              fill="#1bec83"
             />
           </AreaChartRecharts>
         </ResponsiveContainer>
