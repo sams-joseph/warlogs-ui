@@ -7,11 +7,14 @@ import moment from 'moment';
 import PlayerHeader from '../../PlayerHeader';
 import SubNavbar from '../../SubNavbar';
 import Percent from '../../Visualizations/Percent';
+import DamageDoneChart from '../../Visualizations/DamageDoneChart';
 import Table from '../../Table';
+import ChipBar from '../../ChipBar';
 
 import constants from '../../constants';
 import { getLogFilteredByUnit } from '../../../actions/logs';
 import {
+  filterByCaster,
   getPlayerName,
   calculateDamageTotalForAbility,
   getSpellsCast,
@@ -25,6 +28,15 @@ const Container = styled.div`
   padding: 30px 20px 70px 20px;
   margin: 0 auto;
   min-height: calc(100vh - 255px);
+`;
+
+const Grid = styled.div`
+  display: block;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const SpellContainer = styled.div`
@@ -164,16 +176,16 @@ class DamageDetails extends Component {
         key: 'overview', route: `/log-overview/${log._id}?type=overview`, name: 'Overview', disabled: false,
       },
       {
-        key: 'damage-done', route: `/log-overview/${log._id}?type=damage-done`, name: 'Damage Done', disabled: false,
+        key: 'damage-done', route: `/damage-details/${log._id}?player=${query.player}&type=damage-done`, name: 'Damage Done', disabled: false,
       },
       {
-        key: 'healing-done', route: `/log-overview/${log._id}?type=healing-done`, name: 'Healing Done', disabled: false,
+        key: 'healing-done', route: `/healing-details/${log._id}?player=${query.player}&type=healing-done`, name: 'Healing Done', disabled: false,
       },
       {
-        key: 'damage-taken', route: `/log-overview/${log._id}?type=overview`, name: 'Damage Taken', disabled: true,
+        key: 'damage-taken', route: `/damage-taken-details/${log._id}?player=${query.player}&type=overview`, name: 'Damage Taken', disabled: true,
       },
       {
-        key: 'deaths', route: `/log-overview/${log._id}?type=overview`, name: 'Deaths', disabled: true,
+        key: 'deaths', route: `/deaths-details/${log._id}?player=${query.player}&type=overview`, name: 'Deaths', disabled: true,
       },
     ];
 
@@ -189,7 +201,7 @@ class DamageDetails extends Component {
             }}
           />
         ) : (
-          <div>
+          <Grid>
             <PlayerHeader
               player={getPlayerName(log.name)}
               image={this.getPlayerClass(log.raw, getPlayerName(log.name))}
@@ -197,15 +209,24 @@ class DamageDetails extends Component {
               date={moment(log.date).format('MMMM DD, YYYY h:mm A')}
             />
             <SubNavbar links={links} current={query.type} />
-            <h5>Damage Done</h5>
-            <Table
-              data={createRowOutput(log.damage, [constants.complimentColor, constants.compliment2Color])}
-              cells={5}
-              cellWidth={['100px', '30%', '30px', '30px', '30px']}
-              maxHeight="inherit"
-              headers={['Name', 'Amount', 'Casts', 'Avg Hit', 'Crit %']}
-            />
-          </div>
+            <ChipBar player={query.player} id={log._id} type={query.type} />
+            <div style={{ marginBottom: '10px' }}>
+              <DamageDoneChart
+                damage={filterByCaster(log.damage, query.player)}
+                player={getPlayerName(log.name)}
+              />
+            </div>
+            <Row>
+              <h5>Damage Done</h5>
+              <Table
+                data={createRowOutput(log.damage, [constants.complimentColor, constants.compliment2Color])}
+                cells={5}
+                cellWidth={['100px', '30%', '30px', '30px', '30px']}
+                maxHeight="inherit"
+                headers={['Name', 'Amount', 'Casts', 'Avg Hit', 'Crit %']}
+              />
+            </Row>
+          </Grid>
         )}
       </Container>
     );
