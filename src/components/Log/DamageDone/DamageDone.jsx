@@ -16,10 +16,37 @@ const Grid = styled.div`
   display: block;
 `;
 
+const SpellContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  & img {
+    height: 25px;
+    width: 25px;
+    background: #000;
+  }
+`;
+
+const SpellName = styled.span`
+  display: block;
+  margin: 0 10px;
+`;
+
 const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
+function getPlayerClass(object, player) {
+  let career = 'npc';
+  object.forEach((obj) => {
+    if (obj.caster.name === player && obj.spell.meta) {
+      career = obj.spell.meta.career;
+    }
+  });
+
+  return career;
+}
 
 function calculateHighestAmount(object, casters, target) {
   let highestAmount = 0;
@@ -42,18 +69,20 @@ function Comparator(a, b) {
 function createRowOutput(object, casters, target, id, filter, color) {
   const max = calculateHighestAmount(object, casters, target);
   let rowData = [];
-  const rows = [];
+  const columns = [[], [], []];
 
   if (object && casters) {
     casters.forEach((caster) => {
+      const career = getPlayerClass(object, caster);
       const totalAmount = calculateTotalAmount(object, caster, target);
       let perSecondAmount = calculatePerSecond(object, caster, target);
-      if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount))
+      if (perSecondAmount === Infinity || Number.isNaN(perSecondAmount)) {
         perSecondAmount = 1;
-
+      }
       if (totalAmount > 0) {
         rowData.push({
           caster,
+          career,
           totalAmount,
           perSecondAmount,
         });
@@ -63,18 +92,25 @@ function createRowOutput(object, casters, target, id, filter, color) {
     });
 
     rowData.forEach((row) => {
-      rows.push([
-        <Link to={`/${filter}-details/${id}?player=${row.caster}&type=damage-done`}>{row.caster}</Link>,
-        <span>
-          {row.totalAmount}
-          <Percent percent={(row.totalAmount / max) * 100} color={color} />
-        </span>,
+      columns[0].push([
+        <SpellContainer>
+          <img src={`/images/icons/${row.career}.png`} alt="spell name" />
+          <SpellName>
+            <Link to={`/${filter}-details/${id}?player=${row.caster}&type=${filter}-done`}>
+              {row.caster}
+            </Link>
+          </SpellName>
+        </SpellContainer>,
+      ]);
+      columns[1].push([
+        <Percent percent={(row.totalAmount / max) * 100} color={color} totalAmount={row.totalAmount} />,
+      ]);
+      columns[2].push([
         row.perSecondAmount,
       ]);
     });
   }
-
-  return rows;
+  return columns;
 }
 
 const DamageDone = ({ log, success, player }) => (
@@ -99,9 +135,8 @@ const DamageDone = ({ log, success, player }) => (
         <Row>
           <h5>Damage Done</h5>
           <Table
+            colSizes={[1, 2, 1]}
             data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
-            cells={3}
-            cellWidth={['100px', '40%', '30px']}
             maxHeight="inherit"
             headers={['Name', 'Amount', 'DPS']}
           />

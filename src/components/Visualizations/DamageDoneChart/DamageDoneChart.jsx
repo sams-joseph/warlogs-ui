@@ -58,6 +58,7 @@ class DamageDoneChart extends Component {
       <Paper
         style={{
           marginTop: '30px',
+          border: `1px solid ${constants.highlightColor}`,
         }}
         zDepth={0}
       >

@@ -100,7 +100,7 @@ function createRowOutput(object, color) {
   const spells = getSpellsCast(object);
   const max = calculateHighestAmount(object, spells);
   let rowData = [];
-  const rows = [];
+  const columns = [[], [], [], [], []];
 
   if (object) {
     spells.forEach((spell) => {
@@ -125,20 +125,25 @@ function createRowOutput(object, color) {
     });
 
     rowData.forEach((row) => {
-      rows.push([
+      columns[0].push([
         <SpellContainer><img src={`/images/abilities/${row.icon}.png`} alt="spell name" /><SpellName>{row.spell}</SpellName></SpellContainer>,
-        <span>
-          {row.totalAmount}
-          <Percent percent={(row.totalAmount / max) * 100} color={color} />
-        </span>,
+      ]);
+      columns[1].push([
+        <Percent percent={(row.totalAmount / max) * 100} color={color} totalAmount={row.totalAmount} />,
+      ]);
+      columns[2].push([
         row.casts,
+      ]);
+      columns[3].push([
         row.avgHit,
+      ]);
+      columns[4].push([
         `${row.spellCrit}%`,
       ]);
     });
   }
 
-  return rows;
+  return columns;
 }
 
 class DamageDetails extends Component {
@@ -222,8 +227,7 @@ class DamageDetails extends Component {
               <h5>Damage Done</h5>
               <Table
                 data={createRowOutput(log.damage, [constants.complimentColor, constants.compliment2Color])}
-                cells={5}
-                cellWidth={['120px', '30%', '20px', '20px', '20px']}
+                colSizes={[1, 2, 1, 1, 1]}
                 maxHeight="inherit"
                 headers={['Name', 'Amount', 'Casts', 'Avg Hit', 'Crit %']}
               />

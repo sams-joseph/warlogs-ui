@@ -117,7 +117,7 @@ function getPlayerClass(object, player) {
 function createRowOutput(object, casters, target, id, filter, color) {
   const max = calculateHighestAmount(object, casters, target);
   let rowData = [];
-  const rows = [];
+  const columns = [[], [], []];
 
   if (object && casters) {
     casters.forEach((caster) => {
@@ -140,26 +140,33 @@ function createRowOutput(object, casters, target, id, filter, color) {
     });
 
     rowData.forEach((row) => {
-      rows.push([
-        <SpellContainer><img src={`/images/icons/${row.career}.png`} alt="spell name" /><SpellName><Link to={`/${filter}-details/${id}?player=${row.caster}&type=${filter}-done`}>{row.caster}</Link></SpellName></SpellContainer>,
-        <span>
-          {row.totalAmount}
-          <Percent percent={(row.totalAmount / max) * 100} color={color} />
-        </span>,
+      columns[0].push([
+        <SpellContainer>
+          <img src={`/images/icons/${row.career}.png`} alt="spell name" />
+          <SpellName>
+            <Link to={`/${filter}-details/${id}?player=${row.caster}&type=${filter}-done`}>
+              {row.caster}
+            </Link>
+          </SpellName>
+        </SpellContainer>,
+      ]);
+      columns[1].push([
+        <Percent percent={(row.totalAmount / max) * 100} color={color} totalAmount={row.totalAmount} />,
+      ]);
+      columns[2].push([
         row.perSecondAmount,
       ]);
     });
   }
-
-  return rows;
+  return columns;
 }
 
 function createRowInput(object, color) {
-  if (!object) return;
+  if (!object) return null;
   const allSpells = getSpellsCast(object);
   const max = calculateHighestAmountBySpell(object, allSpells);
   let rowData = [];
-  const rows = [];
+  const columns = [[], [], []];
 
   allSpells.forEach((spell) => {
     const totalAmount = calculateDamageTotalForAbility(object, spell);
@@ -181,42 +188,56 @@ function createRowInput(object, color) {
   });
 
   rowData.forEach((row) => {
-    rows.push([
-      <SpellContainer><img src={`/images/abilities/${row.icon}.png`} alt="spell name" /><SpellName><Link to="/">{row.spell}</Link></SpellName></SpellContainer>,
-      <span>
-        {row.totalAmount}
-        <Percent percent={(row.totalAmount / max) * 100} color={color} />
-      </span>,
+    columns[0].push([
+      <SpellContainer>
+        <img src={`/images/abilities/${row.icon}.png`} alt="spell name" />
+        <SpellName><Link to="/">{row.spell}</Link></SpellName>
+      </SpellContainer>,
+    ]);
+    columns[1].push([
+      <Percent percent={(row.totalAmount / max) * 100} color={color} totalAmount={row.totalAmount} />,
+    ]);
+    columns[2].push([
       row.perSecondAmount,
     ]);
   });
 
-  return rows;
+  return columns;
 }
 
 function createRowDeaths(deaths, damageTaken, damage) {
-  if (!deaths) return;
+  if (!deaths) return null;
   const startTime = Date.parse(damageTaken[0].timestamp.dateTime);
-  const rows = [];
+  const columns = [[], []];
   deaths.forEach((object, index) => {
     const career = getPlayerClass(damage, object.player);
     const milliseconds = Date.parse(object.timestamp.dateTime) - startTime;
     const duration = moment.duration(milliseconds);
     const eventTime = moment.utc(duration.asMilliseconds()).format('mm:ss');
     if (index === 0) {
-      rows.push([
-        <SpellContainer><img src={`/images/icons/${career}.png`} alt="spell name" /><SpellName>{object.player}</SpellName></SpellContainer>,
+      columns[0].push([
+        <SpellContainer>
+          <img src={`/images/icons/${career}.png`} alt="spell name" />
+          <SpellName>{object.player}</SpellName>
+        </SpellContainer>,
+      ]);
+      columns[1].push([
         eventTime,
       ]);
     } else if (Date.parse(object.timestamp.dateTime) !== Date.parse(deaths[index - 1].timestamp.dateTime) && index !== 0) {
-      rows.push([
-        <SpellContainer><img src={`/images/icons/${career}.png`} alt="spell name" /><SpellName>{object.player}</SpellName></SpellContainer>,
+      columns[0].push([
+        <SpellContainer>
+          <img src={`/images/icons/${career}.png`} alt="spell name" />
+          <SpellName>{object.player}</SpellName>
+        </SpellContainer>,
+      ]);
+      columns[1].push([
         eventTime,
       ]);
     }
   });
 
-  return rows;
+  return columns;
 }
 
 const Overview = ({ log, success, player }) => (
@@ -243,19 +264,17 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Damage Done</h5>
             <Table
+              colSizes={[1, 2, 1]}
               data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
-              cells={3}
-              cellWidth={['140px', '30%', '30px']}
-              maxHeight="240px"
+              maxHeight="295px"
               headers={['Name', 'Amount', 'DPS']}
             />
           </Column>
           <Column>
             <h5>Healing Done</h5>
             <Table
+              colSizes={[1, 2, 1]}
               data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
-              cells={3}
-              cellWidth={['100px', '30%', '30px']}
               maxHeight="240px"
               headers={['Name', 'Amount', 'HPS']}
             />
@@ -265,19 +284,17 @@ const Overview = ({ log, success, player }) => (
           <Column>
             <h5>Damage Taken By Source</h5>
             <Table
+              colSizes={[1, 2, 1]}
               data={createRowInput(log.damageTaken, [constants.complimentColor, constants.compliment2Color])}
-              cells={3}
-              cellWidth={['120px', '30%', '30px']}
               headers={['Name', 'Amount', 'DTPS']}
-              maxHeight="240px"
+              maxHeight="295px"
             />
           </Column>
           <Column>
             <h5>Deaths</h5>
             <Table
+              colSizes={[2, 1]}
               data={createRowDeaths(log.deaths, log.damageTaken, log.damage)}
-              cells={2}
-              cellWidth={['40%', '40px']}
               headers={['Name', 'Time']}
               maxHeight="240px"
             />
