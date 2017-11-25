@@ -223,7 +223,7 @@ class DamageDetails extends Component {
               <Table
                 data={createRowOutput(log.damage, [constants.complimentColor, constants.compliment2Color])}
                 cells={5}
-                cellWidth={['100px', '30%', '30px', '30px', '30px']}
+                cellWidth={['120px', '30%', '20px', '20px', '20px']}
                 maxHeight="inherit"
                 headers={['Name', 'Amount', 'Casts', 'Avg Hit', 'Crit %']}
               />
