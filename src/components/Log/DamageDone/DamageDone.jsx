@@ -138,6 +138,7 @@ const DamageDone = ({ log, success, player }) => (
             colSizes={[1, 2, 1]}
             data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
             maxHeight="inherit"
+            autoHeight
             headers={['Name', 'Amount', 'DPS']}
           />
         </Row>

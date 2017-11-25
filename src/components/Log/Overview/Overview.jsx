@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -263,41 +264,48 @@ const Overview = ({ log, success, player }) => (
         <Row>
           <Column>
             <h5>Damage Done</h5>
-            <Table
-              colSizes={[1, 2, 1]}
-              data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
-              maxHeight="295px"
-              headers={['Name', 'Amount', 'DPS']}
-            />
+            <Scrollbars style={{ height: '295px' }}>
+              <Table
+                colSizes={[1, 2, 1]}
+                data={createRowOutput(log.damage, log.damageCasters, false, log._id, 'damage', [constants.complimentColor, constants.compliment2Color])}
+                headers={['Name', 'Amount', 'DPS']}
+              />
+            </Scrollbars>
           </Column>
           <Column>
             <h5>Healing Done</h5>
-            <Table
-              colSizes={[1, 2, 1]}
-              data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
-              maxHeight="240px"
-              headers={['Name', 'Amount', 'HPS']}
-            />
+            <Scrollbars style={{ height: '295px' }}>
+              <Table
+                colSizes={[1, 2, 1]}
+                data={createRowOutput(log.healing, log.healingCasters, false, log._id, 'healing', [constants.compliment2Color, constants.complimentColor])}
+                maxHeight="240px"
+                headers={['Name', 'Amount', 'HPS']}
+              />
+            </Scrollbars>
           </Column>
         </Row>
         <Row>
           <Column>
             <h5>Damage Taken By Source</h5>
-            <Table
-              colSizes={[1, 2, 1]}
-              data={createRowInput(log.damageTaken, [constants.complimentColor, constants.compliment2Color])}
-              headers={['Name', 'Amount', 'DTPS']}
-              maxHeight="295px"
-            />
+            <Scrollbars style={{ height: '295px' }}>
+              <Table
+                colSizes={[1, 2, 1]}
+                data={createRowInput(log.damageTaken, [constants.complimentColor, constants.compliment2Color])}
+                headers={['Name', 'Amount', 'DTPS']}
+                maxHeight="295px"
+              />
+            </Scrollbars>
           </Column>
           <Column>
             <h5>Deaths</h5>
-            <Table
-              colSizes={[2, 1]}
-              data={createRowDeaths(log.deaths, log.damageTaken, log.damage)}
-              headers={['Name', 'Time']}
-              maxHeight="240px"
-            />
+            <Scrollbars style={{ height: '295px' }}>
+              <Table
+                colSizes={[2, 1]}
+                data={createRowDeaths(log.deaths, log.damageTaken, log.damage)}
+                headers={['Name', 'Time']}
+                maxHeight="240px"
+              />
+            </Scrollbars>
           </Column>
         </Row>
       </Grid>

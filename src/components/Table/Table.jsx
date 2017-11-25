@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import constants from '../constants';
 
@@ -29,18 +30,18 @@ const TableCell = styled.div`
   }
 `;
 
-const Table = ({data, headers, maxHeight, colSizes}) => {
+const Table = ({
+  data, headers, colSizes,
+}) => {
   const TableContainer = styled.section`
     color: white;
     display: flex;
     width: 100%;
-    max-height: ${maxHeight};
-    overflow-y: auto;
   `;
 
   const columns = [];
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i += 1) {
     if (colSizes[i] === 1) {
       columns.push(
         <TableColumn>
@@ -69,5 +70,15 @@ const Table = ({data, headers, maxHeight, colSizes}) => {
   );
 };
 
+const {
+  number,
+  string,
+  arrayOf,
+} = PropTypes;
+Table.propTypes = {
+  data: arrayOf(),
+  headers: arrayOf(string),
+  colSizes: arrayOf(number),
+};
 
 export default Table;
